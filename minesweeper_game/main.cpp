@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <QMessageBox>
+#include "rightclickhandler.h"
 
 bool gameOver = false;
 
@@ -97,12 +98,13 @@ int main(int argc, char *argv[]) {
     // Create and add cells to the grid layout
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
-            cells[i][j] = new Cell(i, j, numRows, numCols, cells);
+            cells[i][j] = new Cell(i, j, numRows, numCols, cells, gameOver, lockAllCells, openAllMines);
             cells[i][j]->setMode(Cell::Empty); // Set initial mode to Empty
             cells[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); // Make cells expandable
             gridLayout->addWidget(cells[i][j], i, j);
         }
     }
+
 
     // Place mines and set numbers
     placeMines(cells, numRows, numCols, numMines);
@@ -131,22 +133,32 @@ int main(int argc, char *argv[]) {
     });
 
     // Connect the cells to the lockCell() method if the game is not over
+    // Connect the rightClicked signal of each cell to the appropriate slot
+
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
-            QObject::connect(cells[i][j], &Cell::clicked, [&cells, numRows, numCols, &mainWindow, i, j](){
-                if (!gameOver) {
-                    if (cells[i][j]->currentMode() == Cell::Mine) {
-                        QMessageBox::information(&mainWindow, "Game Over", "You Lost!");
-                        gameOver = true; // Set game state to over
-                        lockAllCells(cells, numRows, numCols); // Lock all cells
-                        openAllMines(cells, numRows, numCols); // Open all mines
-                    } else {
-                        cells[i][j]->reveal();
+            // Get the RightClickHandler object associated with the cell
+            RightClickHandler* rightClickHandler = cells[i][j]->getRightClickHandler();
+
+            // Capture gameOver by reference in the lambda capture list
+            bool& gameOverRef = gameOver; // Capture gameOver by reference
+            QObject::connect(rightClickHandler, &RightClickHandler::rightClicked, cells[i][j], [cells, i, j, &gameOverRef]() {
+                if (!gameOverRef) {
+                    // Toggle between Flag and Empty modes
+                    if (cells[i][j]->currentMode() == Cell::Empty) {
+                        cells[i][j]->setMode(Cell::Flag); // Set mode to Flag
+                    } else if (cells[i][j]->currentMode() == Cell::Flag) {
+                        cells[i][j]->setMode(Cell::Empty); // Set mode to Empty
                     }
                 }
             });
         }
     }
+
+
+
+
+
 
 
 

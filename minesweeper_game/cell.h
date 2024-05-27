@@ -5,21 +5,22 @@
 #include <QLabel>
 #include <QMouseEvent>
 
+// Forward declaration of RightClickHandler class
+class RightClickHandler;
+
 class Cell : public QWidget {
     Q_OBJECT
 
-
-
 signals:
     void clicked();
+    void rightClicked();
 
 public:
-
     enum Mode {
         Empty, Flag, Mine, Num0, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Hint, WrongFlag
     };
 
-    explicit Cell(int row, int col, int numRows, int numCols, Cell* (*cells)[10], QWidget *parent = nullptr);
+    explicit Cell(int row, int col, int numRows, int numCols, Cell* (*cells)[10], bool &gameOver, void (*lockAllCells)(Cell* cells[][10], int numRows, int numCols), void (*openAllMines)(Cell* cells[][10], int numRows, int numCols), QWidget *parent = nullptr);
     void setMode(Mode newMode);
     bool hasMine() const { return mode == Mine; }
     void setMine() { setMode(Mine); }
@@ -30,6 +31,7 @@ public:
     bool isMine() const { return mode == Mine; }
     void lockCell(); // Method to lock the cell from further clicks
     Mode currentMode() const { return mode; }
+    RightClickHandler* getRightClickHandler() { return rightClickHandler; }
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -37,6 +39,7 @@ protected:
 private:
     void updateImage();
     void revealEmptyNeighbors(int row, int col);
+    void handleRightClick(); // Method to handle right-click events
     Mode mode;
     QLabel *imageLabel;
     bool revealed;
@@ -45,6 +48,10 @@ private:
     Cell* (*cells)[10];
     int row;
     int col;
+    bool &gameOver;
+    void (*lockAllCells)(Cell* cells[][10], int numRows, int numCols);
+    void (*openAllMines)(Cell* cells[][10], int numRows, int numCols);
+    RightClickHandler* rightClickHandler;
 };
 
 #endif // CELL_H

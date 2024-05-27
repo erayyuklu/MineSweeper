@@ -1,6 +1,7 @@
 SOURCES += \
     cell.cpp \
-    main.cpp
+    main.cpp \
+    rightclickhandler.cpp
 
 QT += core widgets gui
 
@@ -11,7 +12,8 @@ TEMPLATE = app
 
 
 HEADERS += \
-    cell.h
+    cell.h \
+    rightclickhandler.h
 
 # Add the images folder to the resources
 RESOURCES += \

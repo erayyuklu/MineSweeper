@@ -1,12 +1,12 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'cell.h'
+** Meta object code from reading C++ file 'rightclickhandler.h'
 **
 ** Created by: The Qt Meta Object Compiler version 68 (Qt 6.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../cell.h"
+#include "../../../rightclickhandler.h"
 #include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
@@ -17,7 +17,7 @@
 
 #include <QtCore/qxptype_traits.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'cell.h' doesn't include <QObject>."
+#error "The header file 'rightclickhandler.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
 #error "This file was generated using the moc from 6.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -34,82 +34,69 @@ QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
 
 #ifdef QT_MOC_HAS_STRINGDATA
-struct qt_meta_stringdata_CLASSCellENDCLASS_t {};
-constexpr auto qt_meta_stringdata_CLASSCellENDCLASS = QtMocHelpers::stringData(
-    "Cell",
-    "clicked",
-    "",
-    "rightClicked"
+struct qt_meta_stringdata_CLASSRightClickHandlerENDCLASS_t {};
+constexpr auto qt_meta_stringdata_CLASSRightClickHandlerENDCLASS = QtMocHelpers::stringData(
+    "RightClickHandler",
+    "rightClicked",
+    ""
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
 #endif // !QT_MOC_HAS_STRINGDATA
 } // unnamed namespace
 
-Q_CONSTINIT static const uint qt_meta_data_CLASSCellENDCLASS[] = {
+Q_CONSTINIT static const uint qt_meta_data_CLASSRightClickHandlerENDCLASS[] = {
 
  // content:
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   26,    2, 0x06,    1 /* Public */,
-       3,    0,   27,    2, 0x06,    2 /* Public */,
+       1,    0,   20,    2, 0x06,    1 /* Public */,
 
  // signals: parameters
-    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
 };
 
-Q_CONSTINIT const QMetaObject Cell::staticMetaObject = { {
-    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
-    qt_meta_stringdata_CLASSCellENDCLASS.offsetsAndSizes,
-    qt_meta_data_CLASSCellENDCLASS,
+Q_CONSTINIT const QMetaObject RightClickHandler::staticMetaObject = { {
+    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+    qt_meta_stringdata_CLASSRightClickHandlerENDCLASS.offsetsAndSizes,
+    qt_meta_data_CLASSRightClickHandlerENDCLASS,
     qt_static_metacall,
     nullptr,
-    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSCellENDCLASS_t,
+    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSRightClickHandlerENDCLASS_t,
         // Q_OBJECT / Q_GADGET
-        QtPrivate::TypeAndForceComplete<Cell, std::true_type>,
-        // method 'clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<RightClickHandler, std::true_type>,
         // method 'rightClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
 
-void Cell::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void RightClickHandler::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<Cell *>(_o);
+        auto *_t = static_cast<RightClickHandler *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->clicked(); break;
-        case 1: _t->rightClicked(); break;
+        case 0: _t->rightClicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Cell::*)();
-            if (_t _q_method = &Cell::clicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            using _t = void (RightClickHandler::*)();
+            if (_t _q_method = &RightClickHandler::rightClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
-                return;
-            }
-        }
-        {
-            using _t = void (Cell::*)();
-            if (_t _q_method = &Cell::rightClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
-                *result = 1;
                 return;
             }
         }
@@ -117,45 +104,39 @@ void Cell::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
     (void)_a;
 }
 
-const QMetaObject *Cell::metaObject() const
+const QMetaObject *RightClickHandler::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Cell::qt_metacast(const char *_clname)
+void *RightClickHandler::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_CLASSCellENDCLASS.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_CLASSRightClickHandlerENDCLASS.stringdata0))
         return static_cast<void*>(this);
-    return QWidget::qt_metacast(_clname);
+    return QObject::qt_metacast(_clname);
 }
 
-int Cell::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int RightClickHandler::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 1)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
 }
 
 // SIGNAL 0
-void Cell::clicked()
+void RightClickHandler::rightClicked()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
-}
-
-// SIGNAL 1
-void Cell::rightClicked()
-{
-    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 QT_WARNING_POP
