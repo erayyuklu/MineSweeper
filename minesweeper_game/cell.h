@@ -20,7 +20,7 @@ public:
         Empty, Flag, Mine, Num0, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Hint, WrongFlag
     };
 
-    explicit Cell(int row, int col, int numRows, int numCols, Cell* (*cells)[10], bool &gameOver, void (*lockAllCells)(Cell* cells[][10], int numRows, int numCols), void (*openAllMines)(Cell* cells[][10], int numRows, int numCols), QWidget *parent = nullptr);
+    explicit Cell(int row, int col, int numRows, int numCols, Cell* (**cells), bool &gameOver, void (*lockAllCells)(Cell*** cells, int numRows, int numCols), void (*openAllMines)(Cell*** cells, int numRows, int numCols), QWidget *parent = nullptr);
     void setMode(Mode newMode);
     bool hasMine() const { return mode == Mine; }
     void setMine() { setMode(Mine); }
@@ -45,12 +45,12 @@ private:
     bool revealed;
     int numRows;
     int numCols;
-    Cell* (*cells)[10];
+    Cell* (**cells);
     int row;
     int col;
     bool &gameOver;
-    void (*lockAllCells)(Cell* cells[][10], int numRows, int numCols);
-    void (*openAllMines)(Cell* cells[][10], int numRows, int numCols);
+    void (*lockAllCells)(Cell*** cells, int numRows, int numCols);
+    void (*openAllMines)(Cell*** cells, int numRows, int numCols);
     RightClickHandler* rightClickHandler;
 };
 

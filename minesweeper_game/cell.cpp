@@ -3,7 +3,7 @@
 #include <QPixmap>
 #include <QMessageBox>
 
-Cell::Cell(int row, int col, int numRows, int numCols, Cell* (*cells)[10], bool &gameOver, void (*lockAllCells)(Cell* cells[][10], int numRows, int numCols), void (*openAllMines)(Cell* cells[][10], int numRows, int numCols), QWidget *parent)
+Cell::Cell(int row, int col, int numRows, int numCols, Cell* (**cells), bool &gameOver, void (*lockAllCells)(Cell*** cells, int numRows, int numCols), void (*openAllMines)(Cell*** cells, int numRows, int numCols), QWidget *parent)
     : QWidget(parent), mode(Empty), revealed(false), numRows(numRows), numCols(numCols), cells(cells), row(row), col(col), gameOver(gameOver), lockAllCells(lockAllCells), openAllMines(openAllMines) {
     imageLabel = new QLabel(this); // Set this as the parent
 

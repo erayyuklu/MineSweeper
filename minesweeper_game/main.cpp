@@ -11,7 +11,7 @@
 
 bool gameOver = false;
 
-void lockAllCells(Cell* cells[][10], int numRows, int numCols) {
+void lockAllCells(Cell*** cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             cells[i][j]->setEnabled(false); // Disable mouse events for the cell
@@ -19,7 +19,7 @@ void lockAllCells(Cell* cells[][10], int numRows, int numCols) {
     }
 }
 
-void placeMines(Cell *cells[][10], int numRows, int numCols, int numMines) {
+void placeMines(Cell ***cells, int numRows, int numCols, int numMines) {
     srand(time(nullptr));
 
     int placedMines = 0;
@@ -33,7 +33,7 @@ void placeMines(Cell *cells[][10], int numRows, int numCols, int numMines) {
     }
 }
 
-void setNumbers(Cell *cells[][10], int numRows, int numCols) {
+void setNumbers(Cell ***cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             if (!cells[i][j]->hasMine()) {
@@ -53,7 +53,7 @@ void setNumbers(Cell *cells[][10], int numRows, int numCols) {
     }
 }
 
-void openAllMines(Cell* cells[][10], int numRows, int numCols) {
+void openAllMines(Cell*** cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             if (cells[i][j]->hasMine()) {
@@ -93,11 +93,14 @@ int main(int argc, char *argv[]) {
 
 
     // Create an array to hold the cells
-    Cell *cells[numRows][numCols];
-
+    Cell ***cells = new Cell**[numRows];
+    for (int i = 0; i < numRows; ++i) {
+        cells[i] = new Cell*[numCols];
+    }
     // Create and add cells to the grid layout
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
+
             cells[i][j] = new Cell(i, j, numRows, numCols, cells, gameOver, lockAllCells, openAllMines);
             cells[i][j]->setMode(Cell::Empty); // Set initial mode to Empty
             cells[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); // Make cells expandable
@@ -154,14 +157,6 @@ int main(int argc, char *argv[]) {
             });
         }
     }
-
-
-
-
-
-
-
-
 
     // Set the main window's layout
     mainWindow.setLayout(mainLayout);
