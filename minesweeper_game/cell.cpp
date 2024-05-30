@@ -117,17 +117,30 @@ void Cell::increaseCount() {
 }
 
 void Cell::reveal() {
+    if (revealed) {
+        return; // Do not reveal if already revealed
+    }
+
     revealed = true;
     updateImage();
-    if (mode == Empty) {
-        revealEmptyNeighbors(row, col);
-    } else if (mode == Num0) {
+    emit clicked(); // Emit the clicked signal
+
+    if (mode == Empty || mode == Num0) {
         revealEmptyNeighbors(row, col);
     }
+
 }
 
 void Cell::lockCell() {
     setEnabled(false); // Disable mouse events
+}
+
+void Cell::resetCell() {
+    disconnect(); // Disconnect all signals
+    setMode(Empty); // Set mode to Empty
+    revealed = false; // Set revealed to false
+    setEnabled(true); // Enable the cell for interaction
+    updateImage(); // Update the cell image
 }
 
 void Cell::revealEmptyNeighbors(int row, int col) {

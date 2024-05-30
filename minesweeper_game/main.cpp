@@ -57,10 +57,19 @@ void openAllMines(Cell*** cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             if (cells[i][j]->hasMine()) {
+                // Temporarily disconnect the clicked signal
+                cells[i][j]->disconnect();
                 cells[i][j]->reveal();
             }
         }
     }
+}
+
+int score = 0; // Initialize score variable
+
+void updateScoreLabel(QLabel* scoreLabel, int revealedCount) {
+    score += revealedCount;
+    scoreLabel->setText(QString("Score: %1").arg(score));
 }
 
 int main(int argc, char *argv[]) {
@@ -70,20 +79,46 @@ int main(int argc, char *argv[]) {
     QWidget mainWindow;
     mainWindow.setWindowTitle("Minesweeper");
 
+    // Load the icon from a file
+    QIcon appIcon(":/images/mine.png");
+
+    // Set the application icon
+    app.setWindowIcon(appIcon);
+
     // Set initial size of the main window
     mainWindow.resize(200, 220); // Set width and height according to your preference
 
-    // Create a vertical layout for the main window
     QVBoxLayout *mainLayout = new QVBoxLayout(&mainWindow);
+
+    // Create a horizontal layout for the score and restart button
+    QHBoxLayout *topLayout = new QHBoxLayout;
+
+    // Create a score label
+    QLabel *scoreLabel = new QLabel("Score: 0", &mainWindow);
+    topLayout->addWidget(scoreLabel);
+
+
 
     // Create a restart button
     QPushButton *restartButton = new QPushButton("Restart", &mainWindow);
-    mainLayout->addWidget(restartButton);
+    restartButton->setFixedWidth(70); // Adjust the width of the restart button
+    topLayout->addWidget(restartButton);
+
+    // Create a Hint button
+    QPushButton *hintButton = new QPushButton("Hint", &mainWindow);
+    topLayout->addWidget(hintButton);
+
+
+
+    // Add the topLayout to the mainLayout
+    mainLayout->addLayout(topLayout);
 
     // Create a grid layout to hold the cells
     QGridLayout *gridLayout = new QGridLayout;
     gridLayout->setSpacing(0); // Set spacing between cells to 0
-    gridLayout->setContentsMargins(5, 5, 5, 5); // Set margins to 0 to remove extra space
+    gridLayout->setContentsMargins(0, 0, 0, 0); // Set margins to 0 to remove extra space
+
+
 
     // Define the size of the game table
     const int numRows = 10;
@@ -105,27 +140,43 @@ int main(int argc, char *argv[]) {
             cells[i][j]->setMode(Cell::Empty); // Set initial mode to Empty
             cells[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); // Make cells expandable
             gridLayout->addWidget(cells[i][j], i, j);
+
+            // Connect the reveal signal to update the score
+            QObject::connect(cells[i][j], &Cell::clicked, [&scoreLabel]() {
+                updateScoreLabel(scoreLabel, 1);
+            });
         }
     }
 
+    // Remove spacing between cells
+    gridLayout->setSpacing(0);
+
+    // Add the grid layout to the main layout
+    mainLayout->addLayout(gridLayout);
 
     // Place mines and set numbers
     placeMines(cells, numRows, numCols, numMines);
     setNumbers(cells, numRows, numCols);
 
-    // Add the grid layout to the main layout
-    mainLayout->addLayout(gridLayout);
+
 
     // Connect the restart button's clicked signal to a slot to restart the game
-    QObject::connect(restartButton, &QPushButton::clicked, [&cells, numRows, numCols, numMines](){
-        // Reset all cells to Empty mode and update the UI
+    QObject::connect(restartButton, &QPushButton::clicked, [&cells, &scoreLabel, numRows, numCols, numMines](){
+        // Reset all cells to initial state
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numCols; ++j) {
-                cells[i][j]->setMode(Cell::Empty);
-                cells[i][j]->setEnabled(true); // Re-enable mouse events for the cell
-                cells[i][j]->resetRevealed(); // Reset the revealed flag
+                cells[i][j]->resetCell(); // Use the resetCell method
+
+                // Connect the reveal signal to update the score
+                QObject::connect(cells[i][j], &Cell::clicked, [&scoreLabel]() {
+                    updateScoreLabel(scoreLabel, 1);
+                });
             }
         }
+
+        // Reset score and update the score label
+        score = 0;
+        scoreLabel->setText("Score: 0");
 
         // Redistribute mines and set numbers
         placeMines(cells, numRows, numCols, numMines);

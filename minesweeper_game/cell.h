@@ -15,6 +15,7 @@ signals:
     void clicked();
     void rightClicked();
 
+
 public:
     enum Mode {
         Empty, Flag, Mine, Num0, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Hint, WrongFlag
@@ -30,6 +31,8 @@ public:
     void resetRevealed() { revealed = false; }
     bool isMine() const { return mode == Mine; }
     void lockCell(); // Method to lock the cell from further clicks
+    void resetCell();
+
     Mode currentMode() const { return mode; }
     RightClickHandler* getRightClickHandler() { return rightClickHandler; }
 
