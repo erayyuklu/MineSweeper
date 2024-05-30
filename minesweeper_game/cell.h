@@ -40,6 +40,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
+    void checkWinCondition();
     void updateImage();
     void revealEmptyNeighbors(int row, int col);
     void handleRightClick(); // Method to handle right-click events

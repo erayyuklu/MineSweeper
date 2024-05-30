@@ -14,10 +14,11 @@ bool gameOver = false;
 void lockAllCells(Cell*** cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
-            cells[i][j]->setEnabled(false); // Disable mouse events for the cell
+            cells[i][j]->lockCell(); // Lock the cell using its lockCell method
         }
     }
 }
+
 
 void placeMines(Cell ***cells, int numRows, int numCols, int numMines) {
     srand(time(nullptr));
@@ -53,17 +54,19 @@ void setNumbers(Cell ***cells, int numRows, int numCols) {
     }
 }
 
+
+
 void openAllMines(Cell*** cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             if (cells[i][j]->hasMine()) {
-                // Temporarily disconnect the clicked signal
-                cells[i][j]->disconnect();
+                cells[i][j]->disconnect(); // Temporarily disconnect the clicked signal
                 cells[i][j]->reveal();
             }
         }
     }
 }
+
 
 int score = 0; // Initialize score variable
 
@@ -106,6 +109,7 @@ int main(int argc, char *argv[]) {
 
     // Create a Hint button
     QPushButton *hintButton = new QPushButton("Hint", &mainWindow);
+    hintButton->setFixedWidth(70);
     topLayout->addWidget(hintButton);
 
 
@@ -121,9 +125,9 @@ int main(int argc, char *argv[]) {
 
 
     // Define the size of the game table
-    const int numRows = 10;
-    const int numCols = 10;
-    const int numMines = 10; // Define the number of mines to place
+    const int numRows = 11;
+    const int numCols = 11;
+    const int numMines = 5; // Define the number of mines to place
 
 
 

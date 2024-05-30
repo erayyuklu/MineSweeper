@@ -19,10 +19,12 @@ void Cell::mousePressEvent(QMouseEvent *event) {
 
     if (event->button() == Qt::LeftButton) {
         if (mode == Mine) {
-            QMessageBox::information(this, "Game Over", "You Lost!"); // Show "You Lost" message
             gameOver = true; // Set game state to over
-            lockAllCells(cells, numRows, numCols); // Lock all cells
+
             openAllMines(cells, numRows, numCols); // Open all mines
+            QMessageBox::information(this, "Game Over", "You Lost!"); // Show "You Lost" message
+            lockAllCells(cells, numRows, numCols); // Lock all cells
+
         } else {
             reveal(); // Proceed with normal revealing logic
         }
@@ -116,6 +118,25 @@ void Cell::increaseCount() {
     }
 }
 
+void Cell::checkWinCondition() {
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < numCols; ++j) {
+            if (!cells[i][j]->isRevealed() && !cells[i][j]->hasMine()) {
+                return; // If there are still non-mine cells that are not revealed, return
+            }
+        }
+    }
+
+    // If all non-mine cells are revealed, the player has won
+    if (!gameOver) { // Ensure this block only runs once
+        gameOver = true; // Set game state to over
+        openAllMines(cells, numRows, numCols); // Open all mines
+        QMessageBox::information(this, "Game Won", "Congratulations, you won!"); // Show win message
+        lockAllCells(cells, numRows, numCols); // Lock all cells
+    }
+}
+
+
 void Cell::reveal() {
     if (revealed) {
         return; // Do not reveal if already revealed
@@ -129,10 +150,12 @@ void Cell::reveal() {
         revealEmptyNeighbors(row, col);
     }
 
+    checkWinCondition(); // Check if the player has won after revealing a cell
 }
-
 void Cell::lockCell() {
+    setCursor(Qt::ArrowCursor);
     setEnabled(false); // Disable mouse events
+
 }
 
 void Cell::resetCell() {
