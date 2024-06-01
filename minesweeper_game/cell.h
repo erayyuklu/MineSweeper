@@ -17,6 +17,16 @@ signals:
 
 
 public:
+    void resetSafe() { safe = false; }
+    void resetGuaranteedMine() { guaranteedMine = false; }
+
+
+    bool isHint() const { return mode == Hint; }
+    void setHint() { setMode(Hint); }
+    bool isSafe() const { return safe; }
+    void setSafe(bool value) { safe = value; }
+    bool isGuaranteedMine() const { return guaranteedMine; }
+    void setGuaranteedMine(bool value) { guaranteedMine = value; }
     enum Mode {
         Empty, Flag, Mine, Num0, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Hint, WrongFlag
     };
@@ -32,6 +42,7 @@ public:
     bool isMine() const { return mode == Mine; }
     void lockCell(); // Method to lock the cell from further clicks
     void resetCell();
+    void showHint();
 
     Mode currentMode() const { return mode; }
     RightClickHandler* getRightClickHandler() { return rightClickHandler; }
@@ -40,6 +51,8 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
+    bool safe;
+    bool guaranteedMine;
     void checkWinCondition();
     void updateImage();
     void revealEmptyNeighbors(int row, int col);

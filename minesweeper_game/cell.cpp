@@ -4,15 +4,19 @@
 #include <QMessageBox>
 
 Cell::Cell(int row, int col, int numRows, int numCols, Cell* (**cells), bool &gameOver, void (*lockAllCells)(Cell*** cells, int numRows, int numCols), void (*openAllMines)(Cell*** cells, int numRows, int numCols), QWidget *parent)
-    : QWidget(parent), mode(Empty), revealed(false), numRows(numRows), numCols(numCols), cells(cells), row(row), col(col), gameOver(gameOver), lockAllCells(lockAllCells), openAllMines(openAllMines) {
-    imageLabel = new QLabel(this); // Set this as the parent
-
+    : QWidget(parent), mode(Empty), revealed(false), numRows(numRows), numCols(numCols), cells(cells), row(row), col(col), gameOver(gameOver), lockAllCells(lockAllCells), openAllMines(openAllMines), safe(false), guaranteedMine(false) {
+    imageLabel = new QLabel(this);
     rightClickHandler = new RightClickHandler(this);
     this->installEventFilter(rightClickHandler);
 
     connect(rightClickHandler, &RightClickHandler::rightClicked, this, &Cell::handleRightClick);
 }
 
+
+void Cell::showHint() {
+    QPixmap pixmap(":/images/hint.png");
+    imageLabel->setPixmap(pixmap);
+}
 void Cell::mousePressEvent(QMouseEvent *event) {
     if (!isEnabled()) // If cell is already locked, ignore the click
         return;
@@ -163,8 +167,11 @@ void Cell::resetCell() {
     setMode(Empty); // Set mode to Empty
     revealed = false; // Set revealed to false
     setEnabled(true); // Enable the cell for interaction
+    safe = false; // Reset the safe attribute
+    guaranteedMine = false; // Reset the guaranteedMine attribute
     updateImage(); // Update the cell image
 }
+
 
 void Cell::revealEmptyNeighbors(int row, int col) {
     for (int di = -1; di <= 1; ++di) {

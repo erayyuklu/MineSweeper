@@ -11,6 +11,88 @@
 
 bool gameOver = false;
 
+#include <QDebug>
+
+void updateSafeAndMineCells(Cell*** cells, int numRows, int numCols, bool& changed) {
+    changed = false;
+
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < numCols; ++j) {
+            Cell* cell = cells[i][j];
+            if (cell->isRevealed() && cell->currentMode() >= Cell::Num1 && cell->currentMode() <= Cell::Num8) {
+                int num = cell->currentMode() - Cell::Num0;
+
+                int mineCount = 0;
+                int hiddenCount = 0;
+                QVector<Cell*> neighbors;
+
+                for (int di = -1; di <= 1; ++di) {
+                    for (int dj = -1; dj <= 1; ++dj) {
+                        if (di == 0 && dj == 0) continue; // Skip the cell itself
+                        int ni = i + di;
+                        int nj = j + dj;
+                        if (ni >= 0 && ni < numRows && nj >= 0 && nj < numCols) {
+                            Cell* neighbor = cells[ni][nj];
+                            if (!neighbor->isRevealed()) {
+                                hiddenCount++;
+                                neighbors.append(neighbor);
+                                if (neighbor->isGuaranteedMine()) {
+                                    mineCount++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                qDebug() << "Cell(" << i << "," << j << "): number =" << num << ", mineCount =" << mineCount << ", hiddenCount =" << hiddenCount;
+
+                if (mineCount == num) {
+                    for (Cell* neighbor : neighbors) {
+                        if (!neighbor->isGuaranteedMine() && !neighbor->isSafe()) {
+                            neighbor->setSafe(true);
+                            qDebug() << "Cell(" << (neighbor - cells[0][0]) / numCols << "," << (neighbor - cells[0][0]) % numCols << ") set as Safe";
+                            changed = true;
+                        }
+                    }
+                }
+
+                if (mineCount + hiddenCount == num) {
+                    for (Cell* neighbor : neighbors) {
+                        if (!neighbor->isSafe() && !neighbor->isGuaranteedMine()) {
+                            neighbor->setGuaranteedMine(true);
+                            qDebug() << "Cell(" << (neighbor - cells[0][0]) / numCols << "," << (neighbor - cells[0][0]) % numCols << ") set as Guaranteed Mine";
+                            changed = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void giveHint(Cell*** cells, int numRows, int numCols) {
+    bool changed;
+    do {
+        updateSafeAndMineCells(cells, numRows, numCols, changed);
+    } while (changed);
+
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < numCols; ++j) {
+            Cell* cell = cells[i][j];
+            if (cell->isSafe() && !cell->isRevealed() && !cell->isHint()) {
+                cell->showHint(); // Show hint without changing the mode
+                return;
+            }
+        }
+    }
+
+    QMessageBox::information(nullptr, "Hint", "No safe moves left!");
+}
+
+
+
+
+
 void lockAllCells(Cell*** cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
@@ -127,7 +209,7 @@ int main(int argc, char *argv[]) {
     // Define the size of the game table
     const int numRows = 11;
     const int numCols = 11;
-    const int numMines = 5; // Define the number of mines to place
+    const int numMines = 20; // Define the number of mines to place
 
 
 
@@ -212,6 +294,9 @@ int main(int argc, char *argv[]) {
             });
         }
     }
+    QObject::connect(hintButton, &QPushButton::clicked, [cells, numRows, numCols]() {
+        giveHint(cells, numRows, numCols);
+    });
 
     // Set the main window's layout
     mainWindow.setLayout(mainLayout);
