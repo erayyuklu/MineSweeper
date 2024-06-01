@@ -48,16 +48,12 @@ void Cell::mousePressEvent(QMouseEvent *event) {
     }
 
     if (event->button() == Qt::RightButton) {
-        qDebug() << "Right button clicked";
         if (!isEnabled() || revealed || gameOver) // If cell is already locked, revealed, or game is over, ignore the click
             return;
-
         if (!isFlagged()) {
-            qDebug() << "empty button clicked";
             showFlag();
             setFlagged(true);
         } else {
-            qDebug() << "empty button 2 clicked";
             hideFlag();
             setFlagged(false);
         }
@@ -192,6 +188,7 @@ void Cell::resetCell() {
     safe = false; // Reset the safe attribute
     guaranteedMine = false; // Reset the guaranteedMine attribute
     updateImage(); // Update the cell image
+    flagged=false;
 }
 
 

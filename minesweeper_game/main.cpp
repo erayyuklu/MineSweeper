@@ -3,32 +3,31 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QLabel>
+#include <QMessageBox>
 #include "cell.h"
 #include <ctime>
 #include <cstdlib>
-#include <QMessageBox>
-
 
 bool gameOver = false;
-int N=20;
-int M=20;
-int K=15;
-
+int N = 20;
+int M = 20;
+int K = 15;
 
 #include <QDebug>
 
-void updateSafeAndMineCells(Cell*** cells, int numRows, int numCols, bool& changed) {
+void updateSafeAndMineCells(Cell ***cells, int numRows, int numCols, bool &changed) {
     changed = false;
 
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
-            Cell* cell = cells[i][j];
+            Cell *cell = cells[i][j];
             if (cell->isRevealed() && cell->currentMode() >= Cell::Num1 && cell->currentMode() <= Cell::Num8) {
                 int num = cell->currentMode() - Cell::Num0;
 
                 int mineCount = 0;
                 int hiddenCount = 0;
-                QVector<Cell*> neighbors;
+                QVector<Cell *> neighbors;
 
                 for (int di = -1; di <= 1; ++di) {
                     for (int dj = -1; dj <= 1; ++dj) {
@@ -36,7 +35,7 @@ void updateSafeAndMineCells(Cell*** cells, int numRows, int numCols, bool& chang
                         int ni = i + di;
                         int nj = j + dj;
                         if (ni >= 0 && ni < numRows && nj >= 0 && nj < numCols) {
-                            Cell* neighbor = cells[ni][nj];
+                            Cell *neighbor = cells[ni][nj];
                             if (!neighbor->isRevealed()) {
                                 hiddenCount++;
                                 neighbors.append(neighbor);
@@ -48,23 +47,21 @@ void updateSafeAndMineCells(Cell*** cells, int numRows, int numCols, bool& chang
                     }
                 }
 
-                qDebug() << "Cell(" << i << "," << j << "): number =" << num << ", mineCount =" << mineCount << ", hiddenCount =" << hiddenCount;
+
 
                 if (mineCount == num) {
-                    for (Cell* neighbor : neighbors) {
+                    for (Cell *neighbor : neighbors) {
                         if (!neighbor->isGuaranteedMine() && !neighbor->isSafe()) {
                             neighbor->setSafe(true);
-                            qDebug() << "Cell(" << (neighbor - cells[0][0]) / numCols << "," << (neighbor - cells[0][0]) % numCols << ") set as Safe";
                             changed = true;
                         }
                     }
                 }
 
                 if (mineCount + hiddenCount == num) {
-                    for (Cell* neighbor : neighbors) {
+                    for (Cell *neighbor : neighbors) {
                         if (!neighbor->isSafe() && !neighbor->isGuaranteedMine()) {
                             neighbor->setGuaranteedMine(true);
-                            qDebug() << "Cell(" << (neighbor - cells[0][0]) / numCols << "," << (neighbor - cells[0][0]) % numCols << ") set as Guaranteed Mine";
                             changed = true;
                         }
                     }
@@ -74,19 +71,19 @@ void updateSafeAndMineCells(Cell*** cells, int numRows, int numCols, bool& chang
     }
 }
 
-void giveHint(Cell*** cells, int numRows, int numCols) {
+void giveHint(Cell ***cells, int numRows, int numCols) {
     bool changed;
     do {
         updateSafeAndMineCells(cells, numRows, numCols, changed);
     } while (changed);
 
-    static Cell* hintCell = nullptr; // Store the previously suggested hint cell
+    static Cell *hintCell = nullptr; // Store the previously suggested hint cell
 
     // Find a safe cell that hasn't been revealed
-    Cell* newHintCell = nullptr;
+    Cell *newHintCell = nullptr;
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
-            Cell* cell = cells[i][j];
+            Cell *cell = cells[i][j];
             if (cell->isSafe() && !cell->isRevealed() && !cell->isHint()) {
                 cell->showHint(); // Show hint without changing the mode
                 cell->markAsHint(); // Mark the cell as suggested by the hint
@@ -111,18 +108,13 @@ void giveHint(Cell*** cells, int numRows, int numCols) {
     hintCell = newHintCell;
 }
 
-
-
-
-
-void lockAllCells(Cell*** cells, int numRows, int numCols) {
+void lockAllCells(Cell ***cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             cells[i][j]->lockCell(); // Lock the cell using its lockCell method
         }
     }
 }
-
 
 void placeMines(Cell ***cells, int numRows, int numCols, int numMines) {
     srand(time(nullptr));
@@ -158,9 +150,7 @@ void setNumbers(Cell ***cells, int numRows, int numCols) {
     }
 }
 
-
-
-void openAllMines(Cell*** cells, int numRows, int numCols) {
+void openAllMines(Cell ***cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             if (cells[i][j]->hasMine()) {
@@ -171,17 +161,16 @@ void openAllMines(Cell*** cells, int numRows, int numCols) {
     }
 }
 
-
 int score = 0; // Initialize score variable
 
-void updateScoreLabel(QLabel* scoreLabel, int revealedCount) {
+void updateScoreLabel(QLabel *scoreLabel, int revealedCount) {
     score += revealedCount;
     scoreLabel->setText(QString("Score: %1").arg(score));
 }
-// In the main.cpp file
-Cell* hintCell = nullptr;
-// Function to reset the game
-void resetHintState(Cell*** cells, int numRows, int numCols) {
+
+Cell *hintCell = nullptr;
+
+void resetHintState(Cell ***cells, int numRows, int numCols) {
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             cells[i][j]->resetHint(); // Reset hint state for all cells
@@ -189,6 +178,15 @@ void resetHintState(Cell*** cells, int numRows, int numCols) {
     }
 }
 
+void cleanup(Cell ***cells, int numRows, int numCols) {
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < numCols; ++j) {
+            delete cells[i][j]; // Delete each cell
+        }
+        delete[] cells[i]; // Delete each row
+    }
+    delete[] cells; // Delete the cell array
+}
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -204,7 +202,7 @@ int main(int argc, char *argv[]) {
     app.setWindowIcon(appIcon);
 
     // Set initial size of the main window
-    mainWindow.setFixedSize(15*N + 22, 15*M + 52); // Set width and height according to your preference
+    mainWindow.setFixedSize(15 * N + 22, 15 * M + 52); // Set width and height according to your preference
 
     QVBoxLayout *mainLayout = new QVBoxLayout(&mainWindow);
 
@@ -214,8 +212,6 @@ int main(int argc, char *argv[]) {
     // Create a score label
     QLabel *scoreLabel = new QLabel("Score: 0", &mainWindow);
     topLayout->addWidget(scoreLabel);
-
-
 
     // Create a restart button
     QPushButton *restartButton = new QPushButton("Restart", &mainWindow);
@@ -227,18 +223,16 @@ int main(int argc, char *argv[]) {
     hintButton->setFixedWidth(48);
     topLayout->addWidget(hintButton);
 
-
-
     // Add the topLayout to the mainLayout
     mainLayout->addLayout(topLayout);
 
     // Create a grid layout to hold the cells
     QGridLayout *gridLayout = new QGridLayout;
-    gridLayout -> setSpacing(0); // Set spacing between cells to 0
-    gridLayout -> setColumnStretch(0,0);
-    gridLayout -> setRowStretch(0,0);
-    gridLayout -> setColumnMinimumWidth(15,15);
-    gridLayout -> setRowMinimumHeight(15,15);
+    gridLayout->setSpacing(0); // Set spacing between cells to 0
+    gridLayout->setColumnStretch(0, 0);
+    gridLayout->setRowStretch(0, 0);
+    gridLayout->setColumnMinimumWidth(15, 15);
+    gridLayout->setRowMinimumHeight(15, 15);
     gridLayout->setContentsMargins(0, 0, 0, 0); // Set margins to 0 to remove extra space
 
     for (int i = 0; i < N; ++i) {
@@ -251,26 +245,23 @@ int main(int argc, char *argv[]) {
         gridLayout->setColumnMinimumWidth(j, 15); // Set the minimum width for each column
     }
 
-
-
     // Define the size of the game table
     const int numRows = N;
     const int numCols = M;
     const int numMines = K; // Define the number of mines to place
     Cell::setHintButton(hintButton);
 
-
     // Create an array to hold the cells
-    Cell ***cells = new Cell**[numRows];
+    Cell ***cells = new Cell **[numRows];
     for (int i = 0; i < numRows; ++i) {
-        cells[i] = new Cell*[numCols];
+        cells[i] = new Cell *[numCols];
     }
+
     // Create and add cells to the grid layout
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
-
             cells[i][j] = new Cell(i, j, numRows, numCols, cells, gameOver, lockAllCells, openAllMines);
-            cells[i][j] -> setMode(Cell::Empty);
+            cells[i][j]->setMode(Cell::Empty);
             gridLayout->addWidget(cells[i][j], i, j);
 
             // Connect the reveal signal to update the score
@@ -290,10 +281,8 @@ int main(int argc, char *argv[]) {
     placeMines(cells, numRows, numCols, numMines);
     setNumbers(cells, numRows, numCols);
 
-
-
     // Connect the restart button's clicked signal to a slot to restart the game
-    QObject::connect(restartButton, &QPushButton::clicked, [&cells, &scoreLabel, &hintButton, numRows, numCols, numMines](){
+    QObject::connect(restartButton, &QPushButton::clicked, [&cells, &scoreLabel, &hintButton, numRows, numCols, numMines]() {
         // Reset all cells to initial state
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numCols; ++j) {
@@ -324,8 +313,6 @@ int main(int argc, char *argv[]) {
         resetHintState(cells, numRows, numCols);
     });
 
-
-
     QObject::connect(hintButton, &QPushButton::clicked, [cells, numRows, numCols]() {
         giveHint(cells, numRows, numCols);
     });
@@ -337,5 +324,10 @@ int main(int argc, char *argv[]) {
     mainWindow.show();
 
     // Execute the application
-    return app.exec();
+    int result = app.exec();
+
+    // Clean up dynamically allocated memory
+    cleanup(cells, numRows, numCols);
+
+    return result;
 }
