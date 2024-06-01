@@ -10,9 +10,9 @@
 #include "rightclickhandler.h"
 
 bool gameOver = false;
-int N=10;
-int M=10;
-int K=5;
+int N=15;
+int M=15;
+int K=15;
 
 #include <QDebug>
 
@@ -79,17 +79,35 @@ void giveHint(Cell*** cells, int numRows, int numCols) {
         updateSafeAndMineCells(cells, numRows, numCols, changed);
     } while (changed);
 
+    static Cell* hintCell = nullptr; // Store the previously suggested hint cell
+
+    // Find a safe cell that hasn't been revealed
+    Cell* newHintCell = nullptr;
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {
             Cell* cell = cells[i][j];
             if (cell->isSafe() && !cell->isRevealed() && !cell->isHint()) {
                 cell->showHint(); // Show hint without changing the mode
-                return;
+                cell->markAsHint(); // Mark the cell as suggested by the hint
+                newHintCell = cell; // Store the new hint cell
+                break;
             }
         }
+        if (newHintCell) break;
     }
 
-    QMessageBox::information(nullptr, "Hint", "No safe moves left!");
+    // If no safe cell is found, show a message
+    if (!newHintCell) {
+        QMessageBox::information(nullptr, "Hint", "No safe moves left!");
+    }
+
+    // If a previous hint cell exists and it hasn't been revealed, reveal it
+    if (hintCell && !hintCell->isRevealed()) {
+        hintCell->revealIfHinted();
+    }
+
+    // Update the previous hint cell with the new hint cell
+    hintCell = newHintCell;
 }
 
 
@@ -159,6 +177,17 @@ void updateScoreLabel(QLabel* scoreLabel, int revealedCount) {
     score += revealedCount;
     scoreLabel->setText(QString("Score: %1").arg(score));
 }
+// In the main.cpp file
+Cell* hintCell = nullptr;
+// Function to reset the game
+void resetHintState(Cell*** cells, int numRows, int numCols) {
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < numCols; ++j) {
+            cells[i][j]->resetHint(); // Reset hint state for all cells
+        }
+    }
+}
+
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -276,10 +305,11 @@ int main(int argc, char *argv[]) {
 
         // Reset game state flag
         gameOver = false;
+
+        // Reset hint state
+        resetHintState(cells, numRows, numCols);
     });
 
-    // Connect the cells to the lockCell() method if the game is not over
-    // Connect the rightClicked signal of each cell to the appropriate slot
 
     for (int i = 0; i < numRows; ++i) {
         for (int j = 0; j < numCols; ++j) {

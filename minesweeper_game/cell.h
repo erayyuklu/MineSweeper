@@ -11,6 +11,8 @@ class RightClickHandler;
 
 class Cell : public QWidget {
     Q_OBJECT
+    bool willRevealIfNotRevealed = false;
+    bool hint = false;
 
 signals:
     void clicked();
@@ -18,6 +20,19 @@ signals:
 
 
 public:
+    void revealIfHinted() { if (hint) reveal(); }
+        // Add a method to mark the cell as suggested by the hint
+    void markAsHint() { hint = true; }
+    // Add a method to reset the flag
+    void resetHint() { hint = false; }
+    // Add a method to check if the cell is marked as suggested by the hint
+
+    // Add a method to mark the cell as suggested by the hint
+    void markAsWillRevealIfNotRevealed() { willRevealIfNotRevealed = true; }
+    // Add a method to reset the flag
+    void resetWillRevealIfNotRevealed() { willRevealIfNotRevealed = false; }
+    // Add a method to check if the cell is marked as suggested by the hint
+    bool isWillRevealIfNotRevealed() const { return willRevealIfNotRevealed; }
     void resetSafe() { safe = false; }
     void resetGuaranteedMine() { guaranteedMine = false; }
     static void setHintButton(QPushButton *button); // Add this line
