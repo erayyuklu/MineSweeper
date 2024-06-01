@@ -10,6 +10,9 @@
 #include "rightclickhandler.h"
 
 bool gameOver = false;
+int N=10;
+int M=10;
+int K=5;
 
 #include <QDebug>
 
@@ -171,7 +174,7 @@ int main(int argc, char *argv[]) {
     app.setWindowIcon(appIcon);
 
     // Set initial size of the main window
-    mainWindow.resize(200, 220); // Set width and height according to your preference
+    mainWindow.resize(20*N, 21*M); // Set width and height according to your preference
 
     QVBoxLayout *mainLayout = new QVBoxLayout(&mainWindow);
 
@@ -207,10 +210,10 @@ int main(int argc, char *argv[]) {
 
 
     // Define the size of the game table
-    const int numRows = 11;
-    const int numCols = 11;
-    const int numMines = 20; // Define the number of mines to place
-
+    const int numRows = N;
+    const int numCols = M;
+    const int numMines = K; // Define the number of mines to place
+    Cell::setHintButton(hintButton);
 
 
     // Create an array to hold the cells
@@ -247,7 +250,7 @@ int main(int argc, char *argv[]) {
 
 
     // Connect the restart button's clicked signal to a slot to restart the game
-    QObject::connect(restartButton, &QPushButton::clicked, [&cells, &scoreLabel, numRows, numCols, numMines](){
+    QObject::connect(restartButton, &QPushButton::clicked, [&cells, &scoreLabel, &hintButton, numRows, numCols, numMines](){
         // Reset all cells to initial state
         for (int i = 0; i < numRows; ++i) {
             for (int j = 0; j < numCols; ++j) {
@@ -263,6 +266,9 @@ int main(int argc, char *argv[]) {
         // Reset score and update the score label
         score = 0;
         scoreLabel->setText("Score: 0");
+
+        // Re-enable the hint button
+        hintButton->setEnabled(true);
 
         // Redistribute mines and set numbers
         placeMines(cells, numRows, numCols, numMines);

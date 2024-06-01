@@ -12,6 +12,12 @@ Cell::Cell(int row, int col, int numRows, int numCols, Cell* (**cells), bool &ga
     connect(rightClickHandler, &RightClickHandler::rightClicked, this, &Cell::handleRightClick);
 }
 
+QPushButton *Cell::hintButton = nullptr; // Initialize the static member
+
+void Cell::setHintButton(QPushButton *button) {
+    hintButton = button;
+}
+
 
 void Cell::showHint() {
     QPixmap pixmap(":/images/hint.png");
@@ -24,11 +30,12 @@ void Cell::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         if (mode == Mine) {
             gameOver = true; // Set game state to over
-
+            if (hintButton) {
+                hintButton->setEnabled(false); // Disable the hint button
+            }
             openAllMines(cells, numRows, numCols); // Open all mines
             QMessageBox::information(this, "Game Over", "You Lost!"); // Show "You Lost" message
             lockAllCells(cells, numRows, numCols); // Lock all cells
-
         } else {
             reveal(); // Proceed with normal revealing logic
         }
@@ -134,6 +141,9 @@ void Cell::checkWinCondition() {
     // If all non-mine cells are revealed, the player has won
     if (!gameOver) { // Ensure this block only runs once
         gameOver = true; // Set game state to over
+        if (hintButton) {
+            hintButton->setEnabled(false); // Disable the hint button
+        }
         openAllMines(cells, numRows, numCols); // Open all mines
         QMessageBox::information(this, "Game Won", "Congratulations, you won!"); // Show win message
         lockAllCells(cells, numRows, numCols); // Lock all cells

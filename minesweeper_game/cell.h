@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QPushButton>
 
 // Forward declaration of RightClickHandler class
 class RightClickHandler;
@@ -19,6 +20,7 @@ signals:
 public:
     void resetSafe() { safe = false; }
     void resetGuaranteedMine() { guaranteedMine = false; }
+    static void setHintButton(QPushButton *button); // Add this line
 
 
     bool isHint() const { return mode == Hint; }
@@ -51,6 +53,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
+    static QPushButton *hintButton; // Add this line
     bool safe;
     bool guaranteedMine;
     void checkWinCondition();
