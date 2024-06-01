@@ -20,6 +20,10 @@ signals:
 
 
 public:
+
+    void hideFlag();
+    void showFlag();
+
     void revealIfHinted() { if (hint) reveal(); }
         // Add a method to mark the cell as suggested by the hint
     void markAsHint() { hint = true; }
@@ -55,6 +59,8 @@ public:
     void increaseCount();
     void reveal();
     bool isRevealed() const { return revealed; }
+    bool isFlagged() const {return flagged;}
+    void setFlagged(bool value) { flagged = value; }
     void resetRevealed() { revealed = false; }
     bool isMine() const { return mode == Mine; }
     void lockCell(); // Method to lock the cell from further clicks
@@ -62,7 +68,7 @@ public:
     void showHint();
 
     Mode currentMode() const { return mode; }
-    RightClickHandler* getRightClickHandler() { return rightClickHandler; }
+
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -78,6 +84,7 @@ private:
     Mode mode;
     QLabel *imageLabel;
     bool revealed;
+    bool flagged;
     int numRows;
     int numCols;
     Cell* (**cells);
@@ -86,7 +93,7 @@ private:
     bool &gameOver;
     void (*lockAllCells)(Cell*** cells, int numRows, int numCols);
     void (*openAllMines)(Cell*** cells, int numRows, int numCols);
-    RightClickHandler* rightClickHandler;
+
 };
 
 #endif // CELL_H

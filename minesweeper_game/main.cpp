@@ -7,12 +7,13 @@
 #include <ctime>
 #include <cstdlib>
 #include <QMessageBox>
-#include "rightclickhandler.h"
+
 
 bool gameOver = false;
-int N=15;
-int M=15;
+int N=20;
+int M=20;
 int K=15;
+
 
 #include <QDebug>
 
@@ -203,7 +204,7 @@ int main(int argc, char *argv[]) {
     app.setWindowIcon(appIcon);
 
     // Set initial size of the main window
-    mainWindow.resize(20*N, 21*M); // Set width and height according to your preference
+    mainWindow.setFixedSize(15*N + 22, 15*M + 52); // Set width and height according to your preference
 
     QVBoxLayout *mainLayout = new QVBoxLayout(&mainWindow);
 
@@ -218,12 +219,12 @@ int main(int argc, char *argv[]) {
 
     // Create a restart button
     QPushButton *restartButton = new QPushButton("Restart", &mainWindow);
-    restartButton->setFixedWidth(70); // Adjust the width of the restart button
+    restartButton->setFixedWidth(48); // Adjust the width of the restart button
     topLayout->addWidget(restartButton);
 
     // Create a Hint button
     QPushButton *hintButton = new QPushButton("Hint", &mainWindow);
-    hintButton->setFixedWidth(70);
+    hintButton->setFixedWidth(48);
     topLayout->addWidget(hintButton);
 
 
@@ -233,8 +234,22 @@ int main(int argc, char *argv[]) {
 
     // Create a grid layout to hold the cells
     QGridLayout *gridLayout = new QGridLayout;
-    gridLayout->setSpacing(0); // Set spacing between cells to 0
+    gridLayout -> setSpacing(0); // Set spacing between cells to 0
+    gridLayout -> setColumnStretch(0,0);
+    gridLayout -> setRowStretch(0,0);
+    gridLayout -> setColumnMinimumWidth(15,15);
+    gridLayout -> setRowMinimumHeight(15,15);
     gridLayout->setContentsMargins(0, 0, 0, 0); // Set margins to 0 to remove extra space
+
+    for (int i = 0; i < N; ++i) {
+        gridLayout->setRowStretch(i, 0);
+        gridLayout->setRowMinimumHeight(i, 15); // Set the minimum height for each row
+    }
+
+    for (int j = 0; j < M; ++j) {
+        gridLayout->setColumnStretch(j, 0);
+        gridLayout->setColumnMinimumWidth(j, 15); // Set the minimum width for each column
+    }
 
 
 
@@ -255,8 +270,7 @@ int main(int argc, char *argv[]) {
         for (int j = 0; j < numCols; ++j) {
 
             cells[i][j] = new Cell(i, j, numRows, numCols, cells, gameOver, lockAllCells, openAllMines);
-            cells[i][j]->setMode(Cell::Empty); // Set initial mode to Empty
-            cells[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); // Make cells expandable
+            cells[i][j] -> setMode(Cell::Empty);
             gridLayout->addWidget(cells[i][j], i, j);
 
             // Connect the reveal signal to update the score
@@ -311,25 +325,7 @@ int main(int argc, char *argv[]) {
     });
 
 
-    for (int i = 0; i < numRows; ++i) {
-        for (int j = 0; j < numCols; ++j) {
-            // Get the RightClickHandler object associated with the cell
-            RightClickHandler* rightClickHandler = cells[i][j]->getRightClickHandler();
 
-            // Capture gameOver by reference in the lambda capture list
-            bool& gameOverRef = gameOver; // Capture gameOver by reference
-            QObject::connect(rightClickHandler, &RightClickHandler::rightClicked, cells[i][j], [cells, i, j, &gameOverRef]() {
-                if (!gameOverRef) {
-                    // Toggle between Flag and Empty modes
-                    if (cells[i][j]->currentMode() == Cell::Empty) {
-                        cells[i][j]->setMode(Cell::Flag); // Set mode to Flag
-                    } else if (cells[i][j]->currentMode() == Cell::Flag) {
-                        cells[i][j]->setMode(Cell::Empty); // Set mode to Empty
-                    }
-                }
-            });
-        }
-    }
     QObject::connect(hintButton, &QPushButton::clicked, [cells, numRows, numCols]() {
         giveHint(cells, numRows, numCols);
     });

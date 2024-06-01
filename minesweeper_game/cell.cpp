@@ -1,15 +1,10 @@
 #include "cell.h"
-#include "rightclickhandler.h"
 #include <QPixmap>
 #include <QMessageBox>
 
 Cell::Cell(int row, int col, int numRows, int numCols, Cell* (**cells), bool &gameOver, void (*lockAllCells)(Cell*** cells, int numRows, int numCols), void (*openAllMines)(Cell*** cells, int numRows, int numCols), QWidget *parent)
     : QWidget(parent), mode(Empty), revealed(false), numRows(numRows), numCols(numCols), cells(cells), row(row), col(col), gameOver(gameOver), lockAllCells(lockAllCells), openAllMines(openAllMines), safe(false), guaranteedMine(false) {
     imageLabel = new QLabel(this);
-    rightClickHandler = new RightClickHandler(this);
-    this->installEventFilter(rightClickHandler);
-
-    connect(rightClickHandler, &RightClickHandler::rightClicked, this, &Cell::handleRightClick);
 }
 
 QPushButton *Cell::hintButton = nullptr; // Initialize the static member
@@ -23,6 +18,17 @@ void Cell::showHint() {
     QPixmap pixmap(":/images/hint.png");
     imageLabel->setPixmap(pixmap);
 }
+
+void Cell::showFlag(){
+    QPixmap pixmap(":/images/flag.png");
+    imageLabel->setPixmap(pixmap);
+}
+void Cell::hideFlag(){
+    QPixmap pixmap(":/images/empty.png");
+    imageLabel->setPixmap(pixmap);
+}
+
+
 void Cell::mousePressEvent(QMouseEvent *event) {
     if (!isEnabled()) // If cell is already locked, ignore the click
         return;
@@ -40,19 +46,25 @@ void Cell::mousePressEvent(QMouseEvent *event) {
             reveal(); // Proceed with normal revealing logic
         }
     }
-}
 
-void Cell::handleRightClick() {
-    if (!isEnabled() || revealed || gameOver) // If cell is already locked, revealed, or game is over, ignore the click
-        return;
+    if (event->button() == Qt::RightButton) {
+        qDebug() << "Right button clicked";
+        if (!isEnabled() || revealed || gameOver) // If cell is already locked, revealed, or game is over, ignore the click
+            return;
 
-    // Toggle between Flag and Empty modes
-    if (mode == Empty) {
-        setMode(Flag); // Set mode to Flag
-    } else if (mode == Flag) {
-        setMode(Empty); // Set mode to Empty
+        if (!isFlagged()) {
+            qDebug() << "empty button clicked";
+            showFlag();
+            setFlagged(true);
+        } else {
+            qDebug() << "empty button 2 clicked";
+            hideFlag();
+            setFlagged(false);
+        }
+
     }
 }
+
 
 void Cell::setMode(Mode newMode) {
     mode = newMode;
