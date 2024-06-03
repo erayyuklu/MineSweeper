@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>@font-face {
+  font-family: octicons-link;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-link;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #000;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h1 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .pl-c {
+  color: #969896;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #795da3;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #333;
+}
+
+.markdown-body .pl-ent {
+  color: #63a35c;
+}
+
+.markdown-body .pl-k {
+  color: #a71d5d;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.markdown-body .pl-v {
+  color: #ed6a43;
+}
+
+.markdown-body .pl-id {
+  color: #b52a1d;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.markdown-body .pl-ml {
+  color: #693a17;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mq {
+  color: #008080;
+}
+
+.markdown-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.markdown-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mo {
+  color: #1d3e81;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}
+</style><style>/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+</style><style>.markdown-body {
+    font-size: 11px;
+}
+
+img.emoji-img.emoji {
+  max-width: 11px;
+  max-height: 11px;
+  vertical-align: middle;
+}
+</style>
+
+        <!--<script src=""></script>-->
+    </head>
+    <body class="markdown-body">
+        <html><head></head><body><h1 id="minesweeper">Minesweeper</h1>
+<p>Project 3 for CMPE230 - Spring 2024 Course.</p>
+<h2 id="about">About</h2>
+<p>Minesweeper | A QT Widget Application written in C++.</p>
+<p>The application supports the following operations:</p>
+<ul>
+<li>Start / Restart Game</li>
+<li>Reveal cells</li>
+<li>See Score</li>
+<li>Hint</li>
+<li>Flag/Unflag cells</li>
+</ul>
+<hr>
+<p>In Minesweeper, only unrevealed cells are clickable. Left-clicking reveals numbers indicating neighboring mines, empty cells, or mines, while right-clicking toggles flags on unrevealed cells. Once revealed, cells become unclickable. The restart button starts a new game with a different mine layout, and a label shows the number of revealed cells as the score. The game's grid and mine count are configurable.</p>
+<p>The game ends when a mine is clicked (loss) or all non-mine cells are revealed (win). After the game ends, all mines are revealed, a notification appears, and all cells become unclickable until a new game starts. The restart button remains functional.</p>
+<p>The hint button suggests a safe, unrevealed cell that does not contain a mine. If no safe move exists, it offers no suggestion. If the suggested cell isn't revealed by the player, a second click reveals it.</p>
+<hr>
+<h2 id="screenshots">Screenshots</h2>
+<p><img src="https://hackmd.io/_uploads/SyC6Z8qNC.png" alt="CleanShot 2024-06-02 at 23.10.31@2x"></p>
+<p><img src="https://hackmd.io/_uploads/HJ8xzUqEA.png" alt="CleanShot 2024-06-02 at 23.11.19@2x"></p>
+<h2 id="usage">Usage</h2>
+<h2 id="example-game-flow">Example Game Flow:</h2>
+<blockquote>
+  <p>M = 20
+  N = 20
+  K = 45</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/BkKPz8cNA.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/SJBKG8cE0.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/HyFqMLcVC.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/H1VnfI94C.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/Hym1X8540.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/BkuWQLq4C.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/S1HzmU5V0.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/BkRf7L9NC.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/rkRXX854C.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/BkMrXI54C.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/BJ8cX8cVA.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/HyEeE8qEC.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/BkoJVI5E0.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/H1LX4894R.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/HJtz4U9ER.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/By8HNIcER.png" alt="drawing" width="100px" height="auto">
+<img src="https://hackmd.io/_uploads/SykOEL5EA.png" alt="drawing" width="100px" height="auto"></p>
+<hr>
+<h2 id="program-structure-qt-creator">Program Structure (QT Creator)</h2>
+<pre><code class="hljs raw language-raw">├── Headers/
+<span class="hljs-string">|   └── cell.h</span>
+<span class="hljs-string">|   └── utils.h</span>
+├── Sources/
+<span class="hljs-string">|   └── cell.cpp</span>
+<span class="hljs-string">|   └── utils.cpp</span>
+<span class="hljs-string">|   └── main.cpp</span>
+├── Resources/
+<span class="hljs-string">|   └── images.qrc</span>
+└── minesweeper_game.pro</code></pre>
+<h2 id="program-structure-directory">Program Structure (Directory)</h2>
+<pre><code class="hljs raw language-raw">├── cell<span class="hljs-selector-class">.h</span>
+├── cell<span class="hljs-selector-class">.cpp</span>
+├── utils<span class="hljs-selector-class">.h</span>
+├── utils<span class="hljs-selector-class">.cpp</span>
+├── <span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.cpp</span>
+├── minesweeper_game<span class="hljs-selector-class">.pro</span>
+├── minesweeper_game<span class="hljs-selector-class">.pro</span><span class="hljs-selector-class">.user</span>
+└── images/</code></pre>
+<h3 id="classes-and-methods">Classes and Methods</h3>
+<h4 id="cell-class">Cell Class</h4>
+<blockquote>
+  <p>This class is responsible for managing a single cell in an application. A cell can be either of the following: </p>
+</blockquote>
+<pre><code class="hljs raw language-raw"><span class="hljs-bullet">- </span>Empty
+<span class="hljs-bullet">- </span>Flag
+<span class="hljs-bullet">- </span>Mine
+<span class="hljs-bullet">- </span>Num0
+<span class="hljs-bullet">- </span>Num1
+<span class="hljs-bullet">- </span>Num2 
+<span class="hljs-bullet">- </span>Num3 
+<span class="hljs-bullet">- </span>Num4 
+<span class="hljs-bullet">- </span>Num5
+<span class="hljs-bullet">- </span>Num6
+<span class="hljs-bullet">- </span>Num7
+<span class="hljs-bullet">- </span>Num8 
+<span class="hljs-bullet">- </span>Hint 
+<span class="hljs-bullet">- </span>WrongFlag</code></pre>
+<blockquote>
+  <p>Some Important Methods:</p>
+</blockquote>
+<ul>
+<li><code>updateImage()</code>: Updates the cell's image based on its mode and revealed status.</li>
+<li><code>checkWinCondition()</code>: Checks if the player has won the game. If all non-mine cells are revealed, the player wins and a win message is shown.</li>
+<li><code>reveal()</code>: Reveals the cell, updating its image and emitting the clicked signal. If the cell is empty or contains a zero, it reveals its neighboring cells. Also checks for win condition after revealing the cell.</li>
+<li><code>revealEmptyNeighbors(int row, int col)</code>: Reveals all neighboring cells that are not yet revealed. This function is called recursively for empty cells to reveal large empty areas.</li>
+</ul>
+<h3 id="signals">Signals</h3>
+<blockquote>
+  <p>Signals were utilized for various features including:</p>
+</blockquote>
+<ul>
+<li>Restart button</li>
+<li>Hint button </li>
+<li>Right-click action on a cell.</li>
+<li>Left-click action on a cell.</li>
+</ul>
+<p>This implementation ensured smooth and responsive interactions within the game interface.</p>
+<h3 id="utilities--usages">Utilities &amp; Usages</h3>
+<ul>
+<li><p><code>void updateSafeAndMineCells(Cell ***cells, int numRows, int numCols, bool &amp;changed)</code>: Decides whether cells are guaranteed to be safe or mines from the perspective of a user. Used in the hint algorithm. If the number of guaranteed mines around a cell equals the cell's number, the remaining hidden cells around it are marked as safe. If the number of guaranteed mines plus hidden cells around a cell equals the cell's number, the remaining hidden cells are marked as mines.</p></li>
+<li><p><code>void giveHint(Cell ***cells, int numRows, int numCols)</code>:  Provides a hint to the player by identifying a safe cell that hasn't been revealed. It updates the status of cells using the updateSafeAndMineCells function until no changes occur. If a safe cell is found, it is marked as a hint. If no safe cells are available, a message is displayed.</p></li>
+<li><p><code>void lockAllCells(Cell ***cells, int numRows, int numCols)</code>: Locks all cells on the game board, preventing any further interactions. This is useful for ending the game or preventing changes during certain operations.</p></li>
+<li><p><code>void placeMines(Cell ***cells, int numRows, int numCols, int numMines)</code>: Randomly places mines on the game board, ensuring that each cell can only contain one mine. The number of mines placed is determined by the numMines parameter.</p></li>
+<li><p><code>void setNumbers(Cell ***cells, int numRows, int numCols)</code>: Sets the number for each cell based on the number of surrounding mines. Cells without mines are assigned a number indicating how many mines are adjacent to them.</p></li>
+<li><p><code>void openAllMines(Cell ***cells, int numRows, int numCols)</code>: Reveals all mines on the game board, typically used when the game is lost. Temporarily disconnects the clicked signal to prevent interaction during the reveal process.</p></li>
+<li><p><code>void resetHintState(Cell ***cells, int numRows, int numCols)</code>: Resets the hint state for all cells on the game board. This is useful for clearing any hint markers before a new hint is provided.</p></li>
+<li><p><code>void cleanup(Cell ***cells, int numRows, int numCols)</code>: Cleans up the dynamically allocated memory for the game board. Deletes each cell and frees the memory allocated for the rows and the cell array.</p></li>
+</ul>
+<h2 id="--void-updatescorelabelqlabel-scorelabel-int-revealedcount-int-score--updates-the-score-label-with-the-current-score-the-score-is-incremented-by-the-number-of-revealed-cells-and-displayed-on-the-score-label">- <code>void updateScoreLabel(QLabel *scoreLabel, int revealedCount, int *score)</code>: Updates the score label with the current score. The score is incremented by the number of revealed cells and displayed on the score label.</h2>
+<h2 id="program-design-and-rationale">Program Design and Rationale</h2>
+<ul>
+<li>The core of the Minesweeper game is a grid layout containing cells. Each cell is an interactive component that the player can click to reveal whether it is a mine or a safe spot. The grid is dynamically created based on the game configuration (<code>N</code> x <code>M</code> cells).</li>
+<li>The gameplay is governed by several functions that manage the game's logic, such as placing mines, calculating adjacent mines, and handling user interactions.</li>
+<li>Each cell is connected to a signal that updates the game's state and the score based on the user's actions. Clicking on a cell will either reveal a mine, ending the game, or show a safe spot, possibly revealing adjacent safe areas automatically if they are free of mines.</li>
+<li>The restart button resets the entire game state, including re-randomizing the placement of mines and resetting the score. The hint button utilizes game logic to provide non-destructive guidance to help players advance in the game.</li>
+</ul>
+<h3 id="game-setup">Game Setup</h3>
+<blockquote>
+  <p>We've set up basic variables to be consumed by the objects and methods outside the main for global access and ease of use:</p>
+</blockquote>
+<blockquote>
+  <p>The variables include: </p>
+</blockquote>
+<pre><code class="hljs cpp language-cpp"><span class="hljs-comment">// Config Variables</span>
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">16</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> M = <span class="hljs-number">16</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> K = <span class="hljs-number">50</span>;</code></pre>
+<pre><code class="hljs cpp language-cpp"><span class="hljs-comment">// UI Variables</span>
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> buttonWidth = <span class="hljs-number">54</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> cellSize = <span class="hljs-number">15</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> paddingX = <span class="hljs-number">22</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> paddingY = <span class="hljs-number">52</span>;</code></pre>
+<pre><code class="hljs cpp language-cpp"><span class="hljs-comment">// State Variables</span>
+<span class="hljs-type">bool</span> gameOver = <span class="hljs-literal">false</span>;
+<span class="hljs-type">int</span> score = <span class="hljs-number">0</span>;</code></pre>
+<h3 id="window--ui">Window &amp; UI</h3>
+<blockquote>
+  <p>On the head of the main, we declare basic window and ui settings</p>
+</blockquote>
+<pre><code class="hljs cpp language-cpp"><span class="hljs-comment">// Global application-level configuration</span>
+<span class="hljs-function">QApplication <span class="hljs-title">app</span><span class="hljs-params">(argc, argv)</span></span>;
+QWidget mainWindow;
+<span class="hljs-function">QIcon <span class="hljs-title">appIcon</span><span class="hljs-params">(<span class="hljs-string">":/images/mine.png"</span>)</span></span>;
+mainWindow.<span class="hljs-built_in">setWindowTitle</span>(<span class="hljs-string">"Minesweeper"</span>);
+app.<span class="hljs-built_in">setWindowIcon</span>(appIcon);</code></pre>
+<pre><code class="hljs cpp language-cpp"><span class="hljs-comment">// Window configuration</span>
+mainWindow.<span class="hljs-built_in">setFixedSize</span>(cellSize * N + paddingX, cellSize * M + paddingY);
+QVBoxLayout *mainLayout = <span class="hljs-keyword">new</span> <span class="hljs-built_in">QVBoxLayout</span>(&amp;mainWindow);
+QHBoxLayout *topLayout = <span class="hljs-keyword">new</span> QHBoxLayout;
+mainLayout-&gt;<span class="hljs-built_in">addLayout</span>(topLayout);</code></pre>
+<blockquote>
+  <p>as well as other styling related definitions:</p>
+</blockquote>
+<pre><code class="hljs cpp language-cpp">gridLayout-&gt;<span class="hljs-built_in">setSpacing</span>(<span class="hljs-number">0</span>);
+gridLayout-&gt;<span class="hljs-built_in">setColumnStretch</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+gridLayout-&gt;<span class="hljs-built_in">setRowStretch</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+gridLayout-&gt;<span class="hljs-built_in">setColumnMinimumWidth</span>(<span class="hljs-number">15</span>, <span class="hljs-number">15</span>);
+gridLayout-&gt;<span class="hljs-built_in">setRowMinimumHeight</span>(<span class="hljs-number">15</span>, <span class="hljs-number">15</span>);
+gridLayout-&gt;<span class="hljs-built_in">setContentsMargins</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i) {
+    gridLayout-&gt;<span class="hljs-built_in">setRowStretch</span>(i, <span class="hljs-number">0</span>);
+    gridLayout-&gt;<span class="hljs-built_in">setRowMinimumHeight</span>(
+        i, <span class="hljs-number">15</span>);
+}
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; M; ++j) {
+    gridLayout-&gt;<span class="hljs-built_in">setColumnStretch</span>(j, <span class="hljs-number">0</span>);
+    gridLayout-&gt;<span class="hljs-built_in">setColumnMinimumWidth</span>(
+        j, <span class="hljs-number">15</span>);
+}</code></pre>
+<h3 id="state">State</h3>
+<blockquote>
+  <p>We keep state variables as following and alter throughout the program:</p>
+</blockquote>
+<pre><code class="hljs">bool gameOver <span class="hljs-operator">=</span> false<span class="hljs-comment">;</span>
+int score <span class="hljs-operator">=</span> <span class="hljs-number">0</span><span class="hljs-comment">;</span></code></pre>
+<h3 id="oop">OOP</h3>
+<p>We did not need an exhaustive use of classes in this project. The objects in the applications are mere buttons and cells.</p>
+<p>The only class we have implemented is <code>Cell</code></p>
+<h3 id="cleanup-and-resource-management">Cleanup and Resource Management</h3>
+<p>Upon closing the application, all dynamically allocated resources, particularly the grid of cells, are properly cleaned up to prevent memory leaks. This ensures that the application runs efficiently and maintains resource integrity throughout its lifecycle.</p>
+<h3 id="logging-and-debugging">Logging and Debugging</h3>
+<ul>
+<li>While we were implementing class method, we have used <code>qDebug</code> utility to trace the execution flow of the program. An example is the overrided <code>mousePressEvent()</code> method on the <code>Cell::QWidget</code> method where we have checked for the type</li>
+<li>To track the hint algorithm, the safe cells and guaranteed mine cells were debugged via the console. This debugging process facilitated the identification and verification of cells, ensuring the accuracy and functionality of the hint mechanism.</li>
+</ul>
+<hr>
+<h2 id="challenges-encountered">Challenges Encountered</h2>
+<ul>
+<li><p>One of the difficulties in the project was that the cells had to be reset while calculating the score. Before I realized that I needed to reset, although the scores were calculated properly in the first round, the cells revealed in the next round were not included in the score again. Resetting the signal coming to the cells was sufficient to solve&nbsp;this&nbsp;situation.</p></li>
+<li><p>Initially, the game grid was covered with custom buttons to manage both left and right click events, enabling gameplay through these buttons. However, this approach led to disruptions in the user interface (UI) component of the game. Consequently, it was found to be more practical and comprehensible to overload the <code>mousePressEvent</code> function to handle these events, providing a more effective solution.</p></li>
+<li><p>Ensuring that a cell is revealed upon the second click of the hint button proved to be challenging. This issue was addressed by using a boolean method named isHint(), which tracked the state of the cell. By implementing this method, it was possible to reveal the cell upon its second click when marked as a hint.</p></li>
+<li><p>Adjusting the distance between the grid and the container was somewhat challenging. This issue was resolved by utilizing various functions of QT's default UI API. The functions used were as follows:</p></li>
+</ul>
+<pre><code class="hljs cpp language-cpp">setSpacing
+setColumnStretch
+setRowStretch
+setColumnMinimumWidth
+setRowMinimumHeight
+setContentsMargins</code></pre>
+<ul>
+<li><p>We did not comply with C++ formatting best practices from the getgo. This had only ever slowed down the process of development. Another problem was with not splitting the code into meaningful modules. We had focused solely on the functionality, ignoring -or rather lacking- the discipline needed.</p></li>
+<li><p>Considerable effort was dedicated to refactoring out unused code, a necessary step due to having explored different approaches for certain functionalities. These functionalities included handling right-click events, displaying the hint button, and managing cell boolean variables. By removing redundant code, the codebase was streamlined, which not only improved readability and maintainability but also enhanced overall performance and reduced potential sources of bugs.</p></li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Overall, this project helped us not only using C++ but also being able adapt 3rd party libraries without a prior knowledge. Apparently, a significant portion of the QT features were unintuivite, especially event handling and ui styling.</p>
+<p>It also played an important role on understanding the tradeoffs of algorithms such as speed &amp; accuracy, thoroughness &amp; ease of implementation. All these compensation were visible while we were implementing the hint algorithm.</p>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li><a href="https://www.github.com/erayyuklu">Eray YÜKLÜ</a> - 2021200273</li>
+<li><a href="https://www.github.com/umitcan07">Ümit Can EVLEKSİZ</a> - 2020200114</li>
+</ul></body></html>
+    </body>
+</html>
